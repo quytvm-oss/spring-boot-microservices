@@ -33,4 +33,7 @@ jobs:
         run: ls -l ./mvnw
 
       - name: Build with Maven
+        run: ./mvnw clean install
+
+      - name: Build with Maven
         run: ./mvnw -ntp verify
