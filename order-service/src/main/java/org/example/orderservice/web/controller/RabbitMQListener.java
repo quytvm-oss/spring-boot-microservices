@@ -1,6 +1,5 @@
 package org.example.orderservice.web.controller;
 
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 import tools.jackson.databind.json.JsonMapper;
 
@@ -19,9 +18,9 @@ public class RabbitMQListener {
     //        System.out.println("New order: " + payload.orderNumber());
     //    }
 
-    @RabbitListener(queues = "${orders.delivered-orders-queue}")
-    public void handleDeliveredOrder(MyPayload payload) {
-        String json = objectMapper.writeValueAsString(payload.content());
-        System.out.println("Delivered order: " + json);
-    }
+    //    @RabbitListener(queues = "${orders.delivered-orders-queue}")
+    //    public void handleDeliveredOrder(MyPayload payload) {
+    //        String json = objectMapper.writeValueAsString(payload.content());
+    //        System.out.println("Delivered order: " + json);
+    //    }
 }
