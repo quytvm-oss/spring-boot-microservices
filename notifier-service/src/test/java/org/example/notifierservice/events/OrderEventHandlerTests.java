@@ -16,15 +16,6 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import tools.jackson.databind.ObjectMapper;
 
-import java.time.LocalDateTime;
-import java.util.Set;
-import java.util.UUID;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
-
 public class OrderEventHandlerTests extends AbstractIT {
     @Autowired
     RabbitTemplate rabbitTemplate;
