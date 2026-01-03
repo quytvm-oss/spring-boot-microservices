@@ -21,6 +21,7 @@
         <module>catalog-service</module>
         <module>order-service</module>
         <module>notifier-service</module>
+        <module>api-gateway</module>
     </modules>
 
     <build>
