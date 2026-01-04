@@ -24,3 +24,6 @@ spring:
 ######## Catalog Service Configuration  #########
 catalog:
   page-size: 10
+
+swagger:
+  api-gateway-url: http://localhost:8989/catalog

@@ -17,14 +17,16 @@ public class OrderMapper {
         newOrder.setCustomer(request.customer());
         newOrder.setDeliveryAddress(request.deliveryAddress());
         Set<OrderItemEntity> orderItems = new HashSet<>();
-        for (OrderItem item : request.items()) {
-            OrderItemEntity orderItem = new OrderItemEntity();
-            orderItem.setCode(item.code());
-            orderItem.setName(item.name());
-            orderItem.setPrice(item.price());
-            orderItem.setQuantity(item.quantity());
-            orderItem.setOrder(newOrder);
-            orderItems.add(orderItem);
+        if (!request.items().isEmpty()) {
+            for (OrderItem item : request.items()) {
+                OrderItemEntity orderItem = new OrderItemEntity();
+                orderItem.setCode(item.code());
+                orderItem.setName(item.name());
+                orderItem.setPrice(item.price());
+                orderItem.setQuantity(item.quantity());
+                orderItem.setOrder(newOrder);
+                orderItems.add(orderItem);
+            }
         }
         newOrder.setItems(orderItems);
         return newOrder;
