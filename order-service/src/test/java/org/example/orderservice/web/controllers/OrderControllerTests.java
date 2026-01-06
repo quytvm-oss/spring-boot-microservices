@@ -18,7 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.jdbc.Sql;
 
 @Sql("/test-data.sql")
-public class OrderControllerTests extends AbstractIT {
+class OrderControllerTests extends AbstractIT {
 
     @Nested
     class CreateOrderTests {
@@ -27,30 +27,30 @@ public class OrderControllerTests extends AbstractIT {
             mockGetProductByCode("P100", "Product 1", new BigDecimal("25.50"));
             var payload =
                     """
+                        {
+                            "customer" : {
+                                "name": "Siva",
+                                "email": "siva@gmail.com",
+                                "phone": "999999999"
+                            },
+                            "deliveryAddress" : {
+                                "addressLine1": "HNO 123",
+                                "addressLine2": "Kukatpally",
+                                "city": "Hyderabad",
+                                "state": "Telangana",
+                                "zipCode": "500072",
+                                "country": "India"
+                            },
+                            "items": [
                                 {
-                                    "customer" : {
-                                        "name": "Siva",
-                                        "email": "siva@gmail.com",
-                                        "phone": "999999999"
-                                    },
-                                    "deliveryAddress" : {
-                                        "addressLine1": "HNO 123",
-                                        "addressLine2": "Kukatpally",
-                                        "city": "Hyderabad",
-                                        "state": "Telangana",
-                                        "zipCode": "500072",
-                                        "country": "India"
-                                    },
-                                    "items": [
-                                        {
-                                            "code": "P100",
-                                            "name": "Product 1",
-                                            "price": 25.50,
-                                            "quantity": 1
-                                        }
-                                    ]
+                                    "code": "P100",
+                                    "name": "Product 1",
+                                    "price": 25.50,
+                                    "quantity": 1
                                 }
-                            """;
+                            ]
+                        }
+                    """;
             given().contentType(ContentType.JSON)
                     .header("Authorization", "Bearer " + getToken())
                     .body(payload)

@@ -22,11 +22,11 @@ scrape_configs:
     static_configs:
       - targets: ['order-service:8082']
 
-  - job_name: 'notification-service'
+  - job_name: 'notifier-service'
     metrics_path: '/actuator/prometheus'
     scrape_interval: 5s
     static_configs:
-      - targets: ['notification-service:8083']
+      - targets: ['notifier-service:8083']
 
   - job_name: 'api-gateway'
     metrics_path: '/actuator/prometheus'

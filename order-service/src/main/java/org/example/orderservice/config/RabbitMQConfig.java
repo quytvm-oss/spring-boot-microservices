@@ -1,13 +1,14 @@
 package org.example.orderservice.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.orderservice.ApplicationProperties;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.support.converter.JacksonJsonMessageConverter;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import tools.jackson.databind.json.JsonMapper;
+// import tools.jackson.databind.json.JsonMapper;
 
 @Configuration
 public class RabbitMQConfig {
@@ -63,15 +64,28 @@ public class RabbitMQConfig {
         return BindingBuilder.bind(errorOrdersQueue()).to(exchange()).with(properties.errorOrdersQueue());
     }
 
+    // verseion 4.0.1
+    //    @Bean
+    //    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory, JsonMapper mapper) {
+    //        final var rabbitTemplate = new RabbitTemplate(connectionFactory);
+    //        rabbitTemplate.setMessageConverter(jacksonConverter(mapper));
+    //        return rabbitTemplate;
+    //    }
+    //
+    //    @Bean
+    //    public JacksonJsonMessageConverter jacksonConverter(JsonMapper mapper) {
+    //        return new JacksonJsonMessageConverter(mapper);
+    //    }
+
     @Bean
-    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory, JsonMapper mapper) {
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory, ObjectMapper objectMapper) {
         final var rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(jacksonConverter(mapper));
+        rabbitTemplate.setMessageConverter(jacksonConverter(objectMapper));
         return rabbitTemplate;
     }
 
     @Bean
-    public JacksonJsonMessageConverter jacksonConverter(JsonMapper mapper) {
-        return new JacksonJsonMessageConverter(mapper);
+    public Jackson2JsonMessageConverter jacksonConverter(ObjectMapper mapper) {
+        return new Jackson2JsonMessageConverter(mapper);
     }
 }

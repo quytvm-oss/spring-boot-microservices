@@ -4,9 +4,9 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.context.annotation.Import;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)

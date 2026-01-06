@@ -2,20 +2,20 @@ package org.example.orderservice;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static java.util.Collections.singletonList;
+import static org.example.orderservice.TestcontainersConfiguration.wiremockServer;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import io.restassured.RestAssured;
 import java.math.BigDecimal;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.keycloak.OAuth2Constants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.security.oauth2.server.resource.autoconfigure.OAuth2ResourceServerProperties;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -26,7 +26,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import org.wiremock.integrations.testcontainers.WireMockContainer;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @Import(TestcontainersConfiguration.class)
@@ -44,16 +43,8 @@ public class AbstractIT {
     @Autowired
     protected MockMvc mockMvc;
 
-    static WireMockContainer wiremockServer = new WireMockContainer("wiremock/wiremock:3.5.2-alpine");
-
     @LocalServerPort
     int port;
-
-    @BeforeAll
-    static void beforeAll() {
-        wiremockServer.start();
-        configureFor(wiremockServer.getHost(), wiremockServer.getPort());
-    }
 
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {

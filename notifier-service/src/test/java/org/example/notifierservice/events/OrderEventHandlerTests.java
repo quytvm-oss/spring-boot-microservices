@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
@@ -14,7 +15,6 @@ import org.example.notifierservice.domain.models.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import tools.jackson.databind.ObjectMapper;
 
 public class OrderEventHandlerTests extends AbstractIT {
     @Autowired

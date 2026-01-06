@@ -1,5 +1,7 @@
 package org.example.orderservice.domain;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import org.example.orderservice.domain.models.*;
 import org.slf4j.Logger;
@@ -7,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tools.jackson.databind.json.JsonMapper;
+// import tools.jackson.databind.json.JsonMapper;
 
 @Service
 @Transactional
@@ -16,12 +18,13 @@ public class OrderEventService {
 
     private final OrderEventRepository orderEventRepository;
     private final OrderEventPublisher orderEventPublisher;
-    private final JsonMapper objectMapper;
+    private final ObjectMapper objectMapper;
+    // private final JsonMapper objectMapper;
 
     OrderEventService(
             OrderEventRepository orderEventRepository,
             OrderEventPublisher orderEventPublisher,
-            JsonMapper objectMapper) {
+            ObjectMapper objectMapper) {
         this.orderEventRepository = orderEventRepository;
         this.orderEventPublisher = orderEventPublisher;
         this.objectMapper = objectMapper;
@@ -103,11 +106,27 @@ public class OrderEventService {
         }
     }
 
+    //    private String toJsonPayload(Object object) {
+    //        return objectMapper.writeValueAsString(object);
+    //    }
+    //
+    //    private <T> T fromJsonPayload(String json, Class<T> type) {
+    //        return objectMapper.readValue(json, type);
+    //    }
+
     private String toJsonPayload(Object object) {
-        return objectMapper.writeValueAsString(object);
+        try {
+            return objectMapper.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private <T> T fromJsonPayload(String json, Class<T> type) {
-        return objectMapper.readValue(json, type);
+        try {
+            return objectMapper.readValue(json, type);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

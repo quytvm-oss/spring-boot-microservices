@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 public class GetOrdersTests extends AbstractIT {
 
     @Test
-    @WithMockOAuth2User(username = "user")
+    @WithMockOAuth2User(username = "quytvm")
     void shouldGetOrdersSuccessfully() throws Exception {
         mockMvc.perform(get("/api/orders")).andExpect(status().isOk());
     }
